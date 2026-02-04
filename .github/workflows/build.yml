@@ -1,15 +1,14 @@
-name: Build
+name: Build ZMK Firmware
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches: [ main ]  # Or your default branch
+  pull_request:
+  workflow_dispatch:   # Allows manual trigger from Actions tab
 
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     with:
-      board: "nice_nano_v2"
-      shield: "my5x6"          # <-- matches your shield folder name
-      # If you want multiple builds (e.g., left/right for split), add more lines here
-      # Example for extra config:
-      # config: "path/to/extra.conf"  # optional
-
-  # Optional: artifact upload step if needed
+      build_matrix_path: build.yaml  # This points to your root build.yaml
+    # No need for secrets unless you're using advanced features
